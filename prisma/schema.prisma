@@ -11,8 +11,100 @@ datasource db {
 }
 
 model Channel {
-  id          String @id @default(uuid())
+  id          String             @id @default(uuid())
+  name        String
+  description String?
+  src         String
+  genres      ChannelOnGenre[]
+  createdAt   DateTime           @default(now())
+  products    ChannelOnProduct[]
+}
+
+model Film {
+  id          String          @id @default(uuid())
   name        String
   description String
   src         String
+  genres      FilmOnGenre[]
+  products    FilmOnProduct[]
+  createdAt   DateTime        @default(now())
+}
+
+model Genre {
+  id        String           @id @default(uuid())
+  name      String
+  films     FilmOnGenre[]
+  channels  ChannelOnGenre[]
+  createdAt DateTime         @default(now())
+}
+
+model User {
+  id       String          @id @default(uuid())
+  username String
+  name     String
+  email    String
+  password String
+  status   UserStatus
+  products productOnUser[]
+}
+
+model Product {
+  id       String             @id @default(uuid())
+  name     String
+  users    productOnUser[]
+  films    FilmOnProduct[]
+  channels ChannelOnProduct[]
+}
+
+model productOnUser {
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+
+  @@id([userId, productId])
+}
+
+model FilmOnProduct {
+  film      Film    @relation(fields: [filmId], references: [id])
+  filmId    String
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+
+  @@id([filmId, productId])
+}
+
+model ChannelOnProduct {
+  channel   Channel  @relation(fields: [channelId], references: [id])
+  channelId String
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+  createdAt DateTime @default(now())
+
+  @@id([channelId, productId])
+}
+
+model FilmOnGenre {
+  film      Film     @relation(fields: [filmId], references: [id])
+  filmId    String
+  genre     Genre    @relation(fields: [genreId], references: [id])
+  genreId   String
+  createdAt DateTime @default(now())
+
+  @@id([filmId, genreId])
+}
+
+model ChannelOnGenre {
+  channel   Channel  @relation(fields: [channelId], references: [id])
+  channelId String
+  Genre     Genre    @relation(fields: [genreId], references: [id])
+  genreId   String
+  createdAt DateTime @default(now())
+
+  @@id([channelId, genreId])
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
 }
