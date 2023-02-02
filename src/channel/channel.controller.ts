@@ -56,14 +56,14 @@ export class ChannelController {
     return await this.channelService.findManyChannelByProductId(id);
   }
 
-  @Get('user/:id')
-  async findManyChannelByUserId(@Param('id') id: string): Promise<Channel[]> {
+  @Get('user')
+  async findManyChannelByUserId(@Body('id') id: string): Promise<Channel[]> {
     return await this.channelService.findManyChannelByUserId(id);
   }
 
-  @Get('user/:id/genre/:genreId')
+  @Get('user/genre/:genreId')
   async findManyChannelByUserIdAndGenreId(
-    @Param('id') id: string,
+    @Body('id') id: string,
     @Param('genreId') genreId: string,
   ): Promise<Channel[]> {
     return await this.channelService.findManyChannelByUserIdAndGenreId(id, genreId);

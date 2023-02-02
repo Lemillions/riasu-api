@@ -13,12 +13,12 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   const customOptions = {
     customCss:
-      '.swagger-ui .topbar { display: none } .swagger-ui section.models { visibility: hidden;} .version-stamp { visibility: hidden; }',
+      '.swagger-ui .topbar { display: none } .version-stamp { visibility: hidden; }',
     customSiteTitle: 'Riasu API',
     customfavIcon: 'https://docs.nestjs.com/assets/logo-small.svg',
   };
   SwaggerModule.setup('api', app, document, customOptions );
 
-  await app.listen(3000);
+  await app.listen(3333);
 }
 bootstrap();

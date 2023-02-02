@@ -1,0 +1,11 @@
+-- AlterTable
+ALTER TABLE "Channel" ADD COLUMN     "banner" TEXT;
+
+-- AlterTable
+ALTER TABLE "Film" ADD COLUMN     "banner" TEXT;
+
+-- AlterTable
+ALTER TABLE "Product" ADD COLUMN     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;

@@ -15,9 +15,10 @@ model Channel {
   name        String
   description String?
   src         String
+  banner      String?
   genres      ChannelOnGenre[]
-  createdAt   DateTime           @default(now())
   products    ChannelOnProduct[]
+  createdAt   DateTime           @default(now())
 }
 
 model Film {
@@ -25,6 +26,7 @@ model Film {
   name        String
   description String
   src         String
+  banner      String?
   genres      FilmOnGenre[]
   products    FilmOnProduct[]
   createdAt   DateTime        @default(now())
@@ -39,21 +41,23 @@ model Genre {
 }
 
 model User {
-  id       String          @id @default(uuid())
-  username String
-  name     String
-  email    String
-  password String
-  status   UserStatus
-  products productOnUser[]
+  id        String          @id @default(uuid())
+  username  String
+  name      String
+  email     String
+  password  String
+  status    UserStatus
+  products  productOnUser[]
+  createdAt DateTime        @default(now())
 }
 
 model Product {
-  id       String             @id @default(uuid())
-  name     String
-  users    productOnUser[]
-  films    FilmOnProduct[]
-  channels ChannelOnProduct[]
+  id        String             @id @default(uuid())
+  name      String
+  users     productOnUser[]
+  films     FilmOnProduct[]
+  channels  ChannelOnProduct[]
+  createdAt DateTime           @default(now())
 }
 
 model productOnUser {
