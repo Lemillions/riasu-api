@@ -13,7 +13,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from '@prisma/client';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('products')
+@ApiTags('Products')
 @Controller('api/product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}

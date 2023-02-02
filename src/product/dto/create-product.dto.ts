@@ -1,8 +1,8 @@
 import { IsString } from 'class-validator';
-import { ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 
 export class CreateProductDto {
-  @ApiPropertyOptional()
+  @ApiProperty()
   @IsString()
   name: string;
 

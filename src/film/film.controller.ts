@@ -13,7 +13,7 @@ import { UpdateFilmDto } from './dto/update-film.dto';
 import { Film } from '@prisma/client';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('films')
+@ApiTags('Films')
 @Controller('api/film')
 export class FilmController {
   constructor(private readonly filmService: FilmService) {}

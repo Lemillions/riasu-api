@@ -7,15 +7,19 @@ export class CreateUserDto {
   @IsString()
   name: string;
 
+  @ApiProperty()
   @IsString()
   username: string;
 
+  @ApiProperty()
   @IsEmail()
   email: string;
 
+  @ApiProperty()
   @IsString()
   password: string;
 
+  @ApiProperty()
   @IsEnum(UserStatus)
   status: UserStatus;
 

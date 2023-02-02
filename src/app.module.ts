@@ -12,10 +12,14 @@ import { ProductService } from './product/product.service';
 import { GenreModule } from './genre/genre.module';
 import { GenreController } from './genre/genre.controller';
 import { GenreService } from './genre/genre.service';
+import { UserModule } from './user/user.module';
+import { UserController } from './user/user.controller';
+import { UserService } from './user/user.service';
+
 
 @Module({
-  imports: [ChannelModule, FilmModule, PrismaModule, ProductModule, GenreModule],
-  controllers: [ChannelController, FilmController, ProductController, GenreController],
-  providers: [ChannelService, FilmService, ProductService, GenreService],
+  imports: [ChannelModule, FilmModule, PrismaModule, ProductModule, GenreModule, UserModule],
+  controllers: [ChannelController, FilmController, ProductController, GenreController, UserController],
+  providers: [ChannelService, FilmService, ProductService, GenreService, UserService],
 })
 export class AppModule {}

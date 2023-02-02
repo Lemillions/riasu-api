@@ -13,7 +13,7 @@ import { UpdateChannelDto } from './dto/update-channel.dto';
 import { Channel } from '@prisma/client';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('channels')
+@ApiTags('Channels')
 @Controller('api/channel')
 export class ChannelController {
   constructor(private readonly channelService: ChannelService) {}
