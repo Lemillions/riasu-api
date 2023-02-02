@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { Channel, Prisma } from '@prisma/client';
+import { Channel } from '@prisma/client';
 import { CreateChannelDto } from './dto/create-channel.dto';
 import { UpdateChannelDto } from './dto/update-channel.dto';
 
@@ -8,7 +8,7 @@ import { UpdateChannelDto } from './dto/update-channel.dto';
 export class ChannelService {
   constructor(private prisma: PrismaService) {}
 
-  async creteChannel(data: CreateChannelDto): Promise<Channel> {
+  async createChannel(data: CreateChannelDto): Promise<Channel> {
     const channel = await this.prisma.channel.create({
       data,
     });
@@ -74,5 +74,48 @@ export class ChannelService {
     });
   }
 
-  
+  async findManyChannelByUserId(id: string): Promise<Channel[]> {
+    const userProducts = await this.prisma.user.findUnique({
+      where: { id: id},
+      include: {
+        products: true,
+      },
+    });
+
+    if(!userProducts){
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
+    const userProductsId = userProducts.products.map(
+      (product) => product.productId,
+    );
+
+    return await this.prisma.channel.findMany({
+      where: {
+        products: {
+          some: {
+            productId: { in: userProductsId },
+          },
+        },
+      },
+    });
+  }
+
+  async findManyChannelByUserIdAndGenreId(
+    userId: string,
+    genreId: string,
+  ): Promise<Channel[]> {
+    const userChannels = await this.findManyChannelByUserId(userId);
+    const userChannelsId = userChannels.map((channel) => channel.id);
+    return await this.prisma.channel.findMany({
+      where: {
+        id: { in: userChannelsId },
+        genres: {
+          some: {
+            genreId,
+          },
+        },
+      },
+    });
+  }
 }
