@@ -18,7 +18,7 @@ async function bootstrap() {
     customfavIcon: 'https://docs.nestjs.com/assets/logo-small.svg',
   };
   SwaggerModule.setup('api', app, document, customOptions );
-
+  app.enableCors();
   await app.listen(3333);
 }
 bootstrap();
