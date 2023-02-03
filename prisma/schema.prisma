@@ -46,7 +46,7 @@ model User {
   name      String
   email     String
   password  String
-  status    UserStatus
+  status    UserStatus      @default(ACTIVE)
   products  productOnUser[]
   createdAt DateTime        @default(now())
 }
@@ -61,9 +61,10 @@ model Product {
 }
 
 model productOnUser {
-  user      User    @relation(fields: [userId], references: [id])
+  expires   DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
   userId    String
-  product   Product @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
   productId String
 
   @@id([userId, productId])

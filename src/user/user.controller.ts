@@ -47,4 +47,9 @@ export class UserController {
   async loginUser(@Body() data: {email: string, password: string}): Promise<User> {
     return await this.userService.loginUser(data.email, data.password)
   }
+
+  @Post(':id/product')
+  async addProductsToUser(@Body() data: string[], @Param('id') id: string): Promise<User> {
+    return await this.userService.addProducts(id, data)
+  }
 }
