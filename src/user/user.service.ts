@@ -9,7 +9,11 @@ export class UserService {
   constructor(private prisma: PrismaService) {}
 
   async getAllUser(): Promise<User[]> {
-    return await this.prisma.user.findMany();
+    return await this.prisma.user.findMany({
+      include: {
+        products: true
+      }
+    });
   }
 
   async getOneUser(id: string): Promise<User> {
@@ -17,6 +21,9 @@ export class UserService {
       where: {
         id: id,
       },
+      include: {
+        products: true
+      }
     });
     if (!user) {
       throw new NotFoundException(`User with id ${id} not found`);
