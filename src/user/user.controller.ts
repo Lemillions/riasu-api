@@ -50,6 +50,6 @@ export class UserController {
 
   @Post(':id/product')
   async addProductsToUser(@Body() data: string[], @Param('id') id: string): Promise<User> {
-    return await this.userService.addProducts(id, data)
+    return await this.userService.updateProducts(id, data)
   }
 }

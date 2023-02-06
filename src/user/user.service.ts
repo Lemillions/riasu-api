@@ -97,7 +97,7 @@ export class UserService {
     return user;
   }
 
-  async addProducts(id: string, productsId: string[]): Promise<any> {
+  async updateProducts(id: string, productsId: string[]): Promise<any> {
     const today = new Date();
     const expires = new Date(today.setMonth(today.getMonth() + 1));
     const data = productsId.map((productId) => ({
@@ -105,6 +105,7 @@ export class UserService {
       productId: productId,
       expires
     }));
+    await this.prisma.productOnUser.deleteMany({where:{userId: id}})
     const resultado = await this.prisma.productOnUser.createMany({
       data
     });
