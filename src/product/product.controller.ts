@@ -49,11 +49,22 @@ export class ProductController {
   @Post(':productId/channel')
   async addChannelToProduct(
     @Param('productId') productId: string,
-    @Body('channelIds') channelIds: string[],
-  ): Promise<Product> {
+    @Body() data: string[],
+  ): Promise<string> {
     return await this.productService.addChannelsToProduct(
       productId,
-      channelIds,
+      data,
+    );
+  }
+
+  @Post(':productId/film')
+  async addFilmToProduct(
+    @Param('productId') productId: string,
+    @Body() data: string[],
+  ): Promise<string> {
+    return await this.productService.addFilmsToProduct(
+      productId,
+      data,
     );
   }
 

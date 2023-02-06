@@ -68,4 +68,12 @@ export class FilmController {
   ): Promise<Film[]> {
     return await this.filmService.findManyFilmByUserIdAndGenreId(id, genreId);
   }
+
+  @Post(':filmId/genre')
+  async addFilmToGenre(
+    @Param('filmId') filmId: string,
+    @Body() data: string[],
+  ): Promise<string> {
+    return await this.filmService.addFilmsToGenre(filmId, data);
+  }
 }

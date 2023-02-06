@@ -12,7 +12,8 @@ export class ProductService {
     return await this.prisma.product.findMany({
       include: {
         channels: true,
-        users: true
+        users: true,
+        films: true,
       },
     });
   }
@@ -22,6 +23,7 @@ export class ProductService {
       where: { id },
       include: {
         channels: true,
+        films: true,
       },
     });
     if (!product) {
@@ -58,21 +60,42 @@ export class ProductService {
     return product;
   }
 
+  async addFilmsToProduct(productId: string, filmsId: string[]): Promise<string> {
+    const data = filmsId.map((filmId) => ({
+      filmId: filmId,
+      productId: productId,
+    }));
+    const resultado = await this.prisma.filmOnProduct.deleteMany({
+      where: { productId: productId },
+    });
+    await this.prisma.filmOnProduct.createMany({
+      data,
+    });
+    if (!resultado) {
+      throw new NotFoundException('Produto não encotrado!');
+    }
+    return 'Ok';
+  }
+
   async addChannelsToProduct(
     productId: string,
     channelsId: string[],
-  ): Promise<Product> {
-    const product = await this.prisma.product.update({
-      where: { id: productId },
-      data: {
-        channels: {
-          connect: channelsId.map((id) => ({
-            channelId_productId: { channelId: id, productId },
-          })),
-        },
-      },
+  ): Promise<string> {
+    const data = channelsId.map((channelId) => ({
+      channelId: channelId,
+      productId: productId,
+    }));
+    const resultado = await this.prisma.channelOnProduct.deleteMany({
+      where: { productId: productId },
     });
-    return product;
+    await this.prisma.channelOnProduct.createMany({
+      data,
+    });
+
+    if (!resultado) {
+      throw new NotFoundException('Produto não encotrado!');
+    }
+    return 'Ok';
   }
 
   async removeChannelsFromProduct(

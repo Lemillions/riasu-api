@@ -11,12 +11,19 @@ export class ChannelService {
   async createChannel(data: CreateChannelDto): Promise<Channel> {
     const channel = await this.prisma.channel.create({
       data,
+      include: {
+        genres: true,
+      }
     });
     return channel;
   }
 
   async findAllChannels(): Promise<Channel[]> {
-    return await this.prisma.channel.findMany();
+    return await this.prisma.channel.findMany({
+      include: {
+        genres: true,
+      }
+    });
   }
 
   async findOneChannel(id: string): Promise<Channel> {

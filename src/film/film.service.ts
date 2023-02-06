@@ -11,12 +11,19 @@ export class FilmService {
   async createFilm(data: CreateFilmDto): Promise<Film> {
     const film = await this.prisma.film.create({
       data,
+      include: {
+        genres: true,
+      }
     });
     return film;
   }
 
   async findAllFilms(): Promise<Film[]> {
-    return await this.prisma.film.findMany();
+    return await this.prisma.film.findMany({
+      include: {
+        genres: true,
+      }
+    });
   }
 
   async findOneFilm(id: string): Promise<Film> {
@@ -122,4 +129,27 @@ export class FilmService {
       },
     });
   }
+
+  async addFilmsToGenre(id: string, genreIds: string[]): Promise<string> {
+    const resultado = await this.prisma.filmOnGenre.deleteMany({
+      where: {
+        filmId: id,
+      },
+    })
+
+    const data = genreIds.map((genreId) => ({
+      filmId: id,
+      genreId,
+    }));
+
+    await this.prisma.filmOnGenre.createMany({
+      data,
+    });
+
+    if (!resultado) {
+      throw new NotFoundException(`Filme não encontrado`);
+    }
+    return 'Ok';
+  }
+
 }
