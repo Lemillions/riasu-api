@@ -125,4 +125,26 @@ export class ChannelService {
       },
     });
   }
+
+  async addChannelsToGenre(id: string, genreIds: string[]): Promise<string> {
+    const resultado = await this.prisma.channelOnGenre.deleteMany({
+      where: {
+        channelId: id,
+      },
+    })
+
+    const data = genreIds.map((genreId) => ({
+      channelId: id,
+      genreId,
+    }));
+
+    await this.prisma.channelOnGenre.createMany({
+      data,
+    });
+
+    if (!resultado) {
+      throw new NotFoundException(`Canal não encontrado`);
+    }
+    return 'Ok';
+  }
 }

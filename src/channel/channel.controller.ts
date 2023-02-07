@@ -69,4 +69,12 @@ export class ChannelController {
     return await this.channelService.findManyChannelByUserIdAndGenreId(id, genreId);
   }
 
+  @Post(':channelId/genre')
+  async addChannelToGenre(
+    @Param('channelId') channelId: string,
+    @Body() data: string[],
+  ): Promise<string> {
+    return await this.channelService.addChannelsToGenre(channelId, data);
+  }
+
 }

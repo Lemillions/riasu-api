@@ -49,9 +49,17 @@ export class GenreController {
     @Post(':genreId/film')
     async addFilmToGenre(
         @Param('genreId') genreId: string,
-        @Body('filmIds') filmIds: string[],
-    ): Promise<Genre> {
-        return await this.genreService.addFilmsToGenre(genreId, filmIds);
+        @Body() data: string[],
+    ): Promise<string> {
+        return await this.genreService.addFilmsToGenre(genreId, data);
+    }
+
+    @Post(':genreId/channel')
+    async addChannelToGenre(
+        @Param('genreId') genreId: string,
+        @Body() data: string[],
+    ): Promise<string> {
+        return await this.genreService.addChannelsToGenre(genreId, data);
     }
 
 }
