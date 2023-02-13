@@ -62,27 +62,27 @@ model Product {
 
 model productOnUser {
   expires   DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   userId    String
-  product   Product  @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   productId String
 
   @@id([userId, productId])
 }
 
 model FilmOnProduct {
-  film      Film    @relation(fields: [filmId], references: [id])
+  film      Film    @relation(fields: [filmId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   filmId    String
-  product   Product @relation(fields: [productId], references: [id])
+  product   Product @relation(fields: [productId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   productId String
 
   @@id([filmId, productId])
 }
 
 model ChannelOnProduct {
-  channel   Channel  @relation(fields: [channelId], references: [id])
+  channel   Channel  @relation(fields: [channelId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   channelId String
-  product   Product  @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   productId String
   createdAt DateTime @default(now())
 
@@ -90,9 +90,9 @@ model ChannelOnProduct {
 }
 
 model FilmOnGenre {
-  film      Film     @relation(fields: [filmId], references: [id])
+  film      Film     @relation(fields: [filmId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   filmId    String
-  genre     Genre    @relation(fields: [genreId], references: [id])
+  genre     Genre    @relation(fields: [genreId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   genreId   String
   createdAt DateTime @default(now())
 
@@ -100,9 +100,9 @@ model FilmOnGenre {
 }
 
 model ChannelOnGenre {
-  channel   Channel  @relation(fields: [channelId], references: [id])
+  channel   Channel  @relation(fields: [channelId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   channelId String
-  Genre     Genre    @relation(fields: [genreId], references: [id])
+  Genre     Genre    @relation(fields: [genreId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   genreId   String
   createdAt DateTime @default(now())
 
