@@ -13,7 +13,7 @@ export class FilmService {
       data,
       include: {
         genres: true,
-      }
+      },
     });
     return film;
   }
@@ -21,8 +21,15 @@ export class FilmService {
   async findAllFilms(): Promise<Film[]> {
     return await this.prisma.film.findMany({
       include: {
-        genres: true,
-      }
+        genres: {
+          select: {
+            genreId: true,
+            genre: {
+              select: { name: true },
+            },
+          },
+        },
+      },
     });
   }
 
@@ -83,13 +90,13 @@ export class FilmService {
 
   async findManyFilmByUserId(id: string): Promise<Film[]> {
     const userProducts = await this.prisma.user.findUnique({
-      where: { id: id},
+      where: { id: id },
       include: {
         products: true,
       },
     });
 
-    if(!userProducts){
+    if (!userProducts) {
       throw new NotFoundException(`User with ID ${id} not found`);
     }
 
@@ -97,7 +104,7 @@ export class FilmService {
       (product) => product.productId,
     );
 
-    return await this.prisma.film.findMany({  
+    return await this.prisma.film.findMany({
       where: {
         products: {
           some: {
@@ -110,11 +117,12 @@ export class FilmService {
     });
   }
 
-  async findManyFilmByUserIdAndGenreId(id: string, genreId: string): Promise<Film[]> {
+  async findManyFilmByUserIdAndGenreId(
+    id: string,
+    genreId: string,
+  ): Promise<Film[]> {
     const userFilms = await this.findManyFilmByUserId(id);
-    const userFilmsId = userFilms.map(
-      (film) => film.id,
-    );
+    const userFilmsId = userFilms.map((film) => film.id);
 
     return await this.prisma.film.findMany({
       where: {
@@ -135,7 +143,7 @@ export class FilmService {
       where: {
         filmId: id,
       },
-    })
+    });
 
     const data = genreIds.map((genreId) => ({
       filmId: id,
@@ -151,5 +159,4 @@ export class FilmService {
     }
     return 'Ok';
   }
-
 }
