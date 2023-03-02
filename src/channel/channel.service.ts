@@ -36,6 +36,16 @@ export class ChannelService {
   async findOneChannel(id: string): Promise<Channel> {
     const channel = await this.prisma.channel.findUnique({
       where: { id },
+      include: {
+        genres: {
+          select: {
+            genreId: true,
+            genre: {
+              select: { name: true },
+            },
+          },
+        },
+      },
     });
     if (!channel) {
       throw new NotFoundException(`Channel with ID ${id} not found`);
