@@ -21,8 +21,15 @@ export class ChannelService {
   async findAllChannels(): Promise<Channel[]> {
     return await this.prisma.channel.findMany({
       include: {
-        genres: true,
-      }
+        genres: {
+          select: {
+            genreId: true,
+            genre: {
+              select: { name: true },
+            },
+          },
+        },
+      },
     });
   }
 

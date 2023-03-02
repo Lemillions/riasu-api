@@ -102,7 +102,7 @@ model FilmOnGenre {
 model ChannelOnGenre {
   channel   Channel  @relation(fields: [channelId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   channelId String
-  Genre     Genre    @relation(fields: [genreId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  genre     Genre    @relation(fields: [genreId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   genreId   String
   createdAt DateTime @default(now())
 
