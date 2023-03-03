@@ -1,4 +1,4 @@
-import { IsString, IsOptional } from 'class-validator';
+import { IsString, IsOptional, IsUrl } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateFilmDto {
@@ -12,11 +12,11 @@ export class CreateFilmDto {
   description: string;
 
   @ApiProperty()
-  @IsString()
+  @IsUrl()
   src: string;
 
   @ApiPropertyOptional()
-  @IsString()
+  @IsUrl()
   @IsOptional()
   banner: string;
 

@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsString, IsOptional } from 'class-validator';
+import { IsString, IsOptional, IsUrl } from 'class-validator';
 
 export class UpdateFilmDto {
   @ApiPropertyOptional()
@@ -13,12 +13,12 @@ export class UpdateFilmDto {
   description: string;
 
   @ApiPropertyOptional()
-  @IsString()
+  @IsUrl()
   @IsOptional()
   src: string;
 
   @ApiPropertyOptional()
-  @IsString()
+  @IsUrl()
   @IsOptional()
   banner: string;
 

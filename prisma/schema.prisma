@@ -60,6 +60,13 @@ model Product {
   createdAt DateTime           @default(now())
 }
 
+model Banner {
+  id        String   @id @default(uuid())
+  src       String
+  link      String
+  createdAt DateTime @default(now())
+}
+
 model productOnUser {
   expires   DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
